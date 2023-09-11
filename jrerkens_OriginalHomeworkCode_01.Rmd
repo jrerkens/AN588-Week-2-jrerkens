@@ -1,0 +1,118 @@
+---
+author: "Jimmy Erkens"
+title: "AN 588 Homework 1"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+     toc: true
+     number_sections: true
+     toc_float: true
+     code_folding: show
+     theme: journal
+---
+
+# Libraries 
+
+We first must load and attach R packages that we want to use for the Challenges in Module 4.
+
+```{r, libraries, warning=F}
+# setwd("/Users/jameserkens/Documents/AN 588")
+library(yaml)
+library(tidyverse) # install.packages("tidyverse"), literally the best thing ever
+library(curl)
+library(rJava)
+library(XLConnect)
+```
+
+# Challenges
+
+## Challenge 1
+
+For challenge 1 we take a quote from James Joyce's Ulysses, represented by a vector of length 1, and split it into a vector of several strings. We first remove punctuation using gsub(), then use `str_split()` from `stringr` to remove spaces. This returns a list so we then use `unlist()` to return back to a character vector. Using `seq()` we retain every third element.
+
+```{r}
+# I name my vector after Portrait of the Artist of a Young Man because I like it more than Ulysses
+potaaym <- c("Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed.")
+potaaym <- gsub("[[:punct:]]", "", potaaym) %>% str_split(, pattern = " ") %>% unlist() # %>% is pipe operator, just passes on the data into the next argument
+# str_split returns a list, we must unlist in order to select every third item
+potaaym <- potaaym[seq(from = 1, to = length(potaaym), by = 3)]; potaaym
+```
+
+
+## Challenge 2
+
+For challenge 2 we do some simple matrix subsetting, fairly self-explainable.
+
+```{r}
+m <- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE);m
+
+# subset 2nd, 3rd,  6th columns
+x <- m[, c(2, 3, 6)]; x
+
+# rows
+x <- m[6:8, ]; x
+
+# both rows and columns
+x <- m[2:6, 2:9]; x
+```
+
+
+## Challenge 3
+
+For challenge 3 we do some, slightly more complex, array subsetting. Here there are 16 5x5 matrices, indiced by (1:4, 1:4).
+
+```{r}
+a <- array(data = order(1:400, decreasing = T), dim = c(5, 5, 4, 4))
+
+a[1, 1, 1, 2]
+
+# this returns the element in the st row, 1st column, of the (1,2) matrix
+
+a[2, 3, 2, ]
+
+# this returns the element in the 3rd row, 2nd column for (1, 2), (2, 2), (3, 2), and (4, 2) matrices
+
+a[1:5, 1:5, 3, 3]
+
+# this returns the entire matrix for the (3, 3) index
+```
+
+
+## Challenge 4
+
+For challenge 4, we create numerous nested lists comprised of character vectors to model taxonomy of _Primates_.
+
+```{r}
+# making vectors of each Hap group
+Platyrrhini <- c("Cebidae", "Atelidae", "Pitheciidae") #plats
+Catarrhini <- c("Cercopithecidae", "Hylobatidae", "Hominidae") #cats
+Tarsioidea <- c("Tarsiidae") #these weirdos
+
+Anthropoidea <- list(Platyrrhini, Catarrhini)
+  names(Anthropoidea) <- list("Platyrrhini", "Catarrhini") # nest plats and cats within anthropoids
+
+Haplorhini <- list(Anthropoidea, Tarsioidea)
+  names(Haplorhini) <- list("Anthropoidea", "Tarsioidea") # nest anthropoids and tarsiers within haps
+
+Lemuroidea <- c("Cheirogaleidae", "Lepilemuridae", "Indriidae", "Lemuridae", # copy and pasted from online
+    "Daubentoniidae") 
+Lorisoidea <- c("Lorisidae", "Galagidae") 
+Strepsirhini <- list(Lemuroidea, Lorisoidea)
+  names(Strepsirhini) <- list("Lemuroidea", "Lorisoidea")
+
+Primates <- list(Haplorhini, Strepsirhini)
+  names(Primates) <- list("Haplorhini", "Strepsrihini"); Primates # the gang's all here!
+```
+
+## Challenge 5
+
+For challenge 5 we filter out a data frame and change the data type for each column. Column 2 gets switched to logical variables, and column 3 gets switched to factor variables.
+
+```{r}
+m3 <- matrix(data = c(3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2), nrow = 5, ncol = 3, byrow = T); m3 #beautiful
+
+df_m3 <- data.frame(m3); df_m3
+df_m3$X2 <- as.logical(df_m3$X2)
+df_m3$X3 <- as.factor(df_m3$X3)
+str(df_m3) # we check our work!
+```
