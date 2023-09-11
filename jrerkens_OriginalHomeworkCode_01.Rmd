@@ -16,12 +16,8 @@ output:
 We first must load and attach R packages that we want to use for the Challenges in Module 4.
 
 ```{r, libraries, warning=F}
-# setwd("/Users/jameserkens/Documents/AN 588")
 library(yaml)
 library(tidyverse) # install.packages("tidyverse"), literally the best thing ever
-library(curl)
-library(rJava)
-library(XLConnect)
 ```
 
 # Challenges
@@ -30,8 +26,8 @@ library(XLConnect)
 
 For challenge 1 we take a quote from James Joyce's Ulysses, represented by a vector of length 1, and split it into a vector of several strings. We first remove punctuation using gsub(), then use `str_split()` from `stringr` to remove spaces. This returns a list so we then use `unlist()` to return back to a character vector. Using `seq()` we retain every third element.
 
-```{r}
-# I name my vector after Portrait of the Artist of a Young Man because I like it more than Ulysses
+```{r, challenge 1}
+# I named my vector after Portrait of the Artist of a Young Man because I like it more than Ulysses
 potaaym <- c("Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed.")
 potaaym <- gsub("[[:punct:]]", "", potaaym) %>% str_split(, pattern = " ") %>% unlist() # %>% is pipe operator, just passes on the data into the next argument
 # str_split returns a list, we must unlist in order to select every third item
@@ -43,7 +39,7 @@ potaaym <- potaaym[seq(from = 1, to = length(potaaym), by = 3)]; potaaym
 
 For challenge 2 we do some simple matrix subsetting, fairly self-explainable.
 
-```{r}
+```{r, challenge 2}
 m <- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE);m
 
 # subset 2nd, 3rd,  6th columns
@@ -59,9 +55,9 @@ x <- m[2:6, 2:9]; x
 
 ## Challenge 3
 
-For challenge 3 we do some, slightly more complex, array subsetting. Here there are 16 5x5 matrices, indiced by (1:4, 1:4).
+For challenge 3 we do some, slightly more complex, array subsetting. Here there are 16 5x5 matrices, indexed by (1:4, 1:4).
 
-```{r}
+```{r, challenge 3}
 a <- array(data = order(1:400, decreasing = T), dim = c(5, 5, 4, 4))
 
 a[1, 1, 1, 2]
@@ -82,7 +78,7 @@ a[1:5, 1:5, 3, 3]
 
 For challenge 4, we create numerous nested lists comprised of character vectors to model taxonomy of _Primates_.
 
-```{r}
+```{r, challenge 4}
 # making vectors of each Hap group
 Platyrrhini <- c("Cebidae", "Atelidae", "Pitheciidae") #plats
 Catarrhini <- c("Cercopithecidae", "Hylobatidae", "Hominidae") #cats
@@ -108,7 +104,7 @@ Primates <- list(Haplorhini, Strepsirhini)
 
 For challenge 5 we filter out a data frame and change the data type for each column. Column 2 gets switched to logical variables, and column 3 gets switched to factor variables.
 
-```{r}
+```{r, challenge 5}
 m3 <- matrix(data = c(3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2), nrow = 5, ncol = 3, byrow = T); m3 #beautiful
 
 df_m3 <- data.frame(m3); df_m3
