@@ -11,6 +11,34 @@ output:
      theme: journal
 ---
 
+# Personal challenges 
+
+## Being stubborn about R versions
+
+I was working on a 2022 version of R and then made the leap to the 2023 version. I forgot that the packages I installed (`tidyverse`!!!) wouldn't load properly without first uninstalling R and RStudio and starting from scratch. For two hours, I was stubborn and instead of following actual protocol tried to troubleshoot both in R and terminal (many stack exchange threads were opened). I eventually swallowed my pride and uninstalled and installed R to made it work; sometimes the easy solution is the actual solution. 
+
+## Being lazy about `str_split()`
+
+I didn't realize `str_split()` returned a list as opposed to a character vector. Instead of taking the time to read the documentation I tried to brute force a solution. Again, I swallowed my pride! The easy solution is valid and `str_split_1()` probably would have been a better function to use.
+
+## YAML issues
+
+I used to make ugly R documents (we always used pdf outputs in undergrad), so I normally wouldn't touch the YAML header. Learning YAML syntax was a hurdle for me, but figuring out proper indents and colons wasn't too difficult to figure out. I definitely have a default _pretty_ YAML for my work now.
+
+# How peer commentary helped
+
+## Clarifying Homework instructions and expectations
+
+I had finished my homework prior to the September 14 class that detailed the additional expectations for assignments so I had spaced writing my own personal challenges in drafting and running my code (excuses!!!). Going through Sam's work and examining her own personal comments reminded me that I needed to reflect on my code.
+
+## Making my comments more clear
+
+Specifically in Challenge 2, Sam pointed out that I wasn't as clear as I could be in explaining how the matrices are created and subset. It's always humbling to have someone else look over your code and come to the conclusion that it's unclear.
+
+## Warning! Missing argument to function call
+
+On line 42 I have the warning `missing argument to function call`. I've experienced this issue in the past when working with pipe operators but never really thought much of it since the code ran. But! Sam pointed it out, and forced me to reconcile this quirk with my code. I isolated the issue and found that this warning is a result of the `str_split()` function. The code functions correctly, but R isn't considering the pipe operator and assumes the comma in the function is an error. Instead of just rolling with the punches I learned something about how R functions internally!
+
 # Libraries 
 
 We first must load and attach R packages that we want to use for the Challenges in Module 4.
@@ -24,7 +52,7 @@ library(tidyverse) # install.packages("tidyverse"), literally the best thing eve
 
 ## Challenge 1
 
-For challenge 1 we take a quote from James Joyce's Ulysses, represented by a vector of length 1, and split it into a vector of several strings. We first remove punctuation using gsub(), then use `str_split()` from `stringr` to remove spaces. This returns a list so we then use `unlist()` to return back to a character vector. Using `seq()` we retain every third element.
+For challenge 1 we take a quote from James Joyce's Ulysses, represented by a vector of length 1, and split it into a vector of several strings. We first remove punctuation using `gsub()`, then use `str_split()` from `stringr` to remove spaces. This returns a list so we then use `unlist()` to return back to a character vector. Using `seq()` we retain every third element.
 
 ```{r, challenge 1}
 # I named my vector after Portrait of the Artist of a Young Man because I like it more than Ulysses
@@ -40,16 +68,16 @@ potaaym <- potaaym[seq(from = 1, to = length(potaaym), by = 3)]; potaaym
 For challenge 2 we do some simple matrix subsetting, fairly self-explainable.
 
 ```{r, challenge 2}
-m <- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE);m
+m <- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE);m # we create an (8, 10) matrix of 1:80, it is input by column as opposed to row
 
-# subset 2nd, 3rd,  6th columns
+# subset 2nd, 3rd,  6th columns 
 x <- m[, c(2, 3, 6)]; x
 
 # rows
-x <- m[6:8, ]; x
+x <- m[6:8, ]; x # we subset the 6th, 7th, and 8th rows of m
 
 # both rows and columns
-x <- m[2:6, 2:9]; x
+x <- m[2:6, 2:9]; x # subset elements that are in rows 2-6 AND columns 2-9
 ```
 
 

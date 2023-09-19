@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jimmy Erkens" />
 
-<meta name="date" content="2023-09-13" />
+<meta name="date" content="2023-09-19" />
 
 <title>AN 588 Homework 1</title>
 
@@ -1581,13 +1581,81 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">AN 588 Homework 1</h1>
 <h4 class="author">Jimmy Erkens</h4>
-<h4 class="date">2023-09-13</h4>
+<h4 class="date">2023-09-19</h4>
 
 </div>
 
 
-<div id="libraries" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Libraries</h1>
+<div id="personal-challenges" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Personal
+challenges</h1>
+<div id="being-stubborn-about-r-versions" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Being stubborn about
+R versions</h2>
+<p>I was working on a 2022 version of R and then made the leap to the
+2023 version. I forgot that the packages I installed
+(<code>tidyverse</code>!!!) wouldn’t load properly without first
+uninstalling R and RStudio and starting from scratch. For two hours, I
+was stubborn and instead of following actual protocol tried to
+troubleshoot both in R and terminal (many stack exchange threads were
+opened). I eventually swallowed my pride and uninstalled and installed R
+to made it work; sometimes the easy solution is the actual solution.</p>
+</div>
+<div id="being-lazy-about-str_split" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Being lazy about
+<code>str_split()</code></h2>
+<p>I didn’t realize <code>str_split()</code> returned a list as opposed
+to a character vector. Instead of taking the time to read the
+documentation I tried to brute force a solution. Again, I swallowed my
+pride! The easy solution is valid and <code>str_split_1()</code>
+probably would have been a better function to use.</p>
+</div>
+<div id="yaml-issues" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> YAML issues</h2>
+<p>I used to make ugly R documents (we always used pdf outputs in
+undergrad), so I normally wouldn’t touch the YAML header. Learning YAML
+syntax was a hurdle for me, but figuring out proper indents and colons
+wasn’t too difficult to figure out. I definitely have a default
+<em>pretty</em> YAML for my work now.</p>
+</div>
+</div>
+<div id="how-peer-commentary-helped" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> How peer commentary
+helped</h1>
+<div id="clarifying-homework-instructions-and-expectations" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Clarifying Homework
+instructions and expectations</h2>
+<p>I had finished my homework prior to the September 14 class that
+detailed the additional expectations for assignments so I had spaced
+writing my own personal challenges in drafting and running my code
+(excuses!!!). Going through Sam’s work and examining her own personal
+comments reminded me that I needed to reflect on my code.</p>
+</div>
+<div id="making-my-comments-more-clear" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Making my comments
+more clear</h2>
+<p>Specifically in Challenge 2, Sam pointed out that I wasn’t as clear
+as I could be in explaining how the matrices are created and subset.
+It’s always humbling to have someone else look over your code and come
+to the conclusion that it’s unclear.</p>
+</div>
+<div id="warning-missing-argument-to-function-call" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Warning! Missing
+argument to function call</h2>
+<p>On line 42 I have the warning
+<code>missing argument to function call</code>. I’ve experienced this
+issue in the past when working with pipe operators but never really
+thought much of it since the code ran. But! Sam pointed it out, and
+forced me to reconcile this quirk with my code. I isolated the issue and
+found that this warning is a result of the <code>str_split()</code>
+function. The code functions correctly, but R isn’t considering the pipe
+operator and assumes the comma in the function is an error. Instead of
+just rolling with the punches I learned something about how R functions
+internally!</p>
+</div>
+</div>
+<div id="libraries" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Libraries</h1>
 <p>We first must load and attach R packages that we want to use for the
 Challenges in Module 4.</p>
 <pre class="r"><code>library(yaml)
@@ -1603,17 +1671,17 @@ library(tidyverse) # install.packages(&quot;tidyverse&quot;), literally the best
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div id="challenges" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Challenges</h1>
-<div id="challenge-1" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Challenge 1</h2>
+<div id="challenges" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Challenges</h1>
+<div id="challenge-1" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Challenge 1</h2>
 <p>For challenge 1 we take a quote from James Joyce’s Ulysses,
 represented by a vector of length 1, and split it into a vector of
-several strings. We first remove punctuation using gsub(), then use
-<code>str_split()</code> from <code>stringr</code> to remove spaces.
-This returns a list so we then use <code>unlist()</code> to return back
-to a character vector. Using <code>seq()</code> we retain every third
-element.</p>
+several strings. We first remove punctuation using <code>gsub()</code>,
+then use <code>str_split()</code> from <code>stringr</code> to remove
+spaces. This returns a list so we then use <code>unlist()</code> to
+return back to a character vector. Using <code>seq()</code> we retain
+every third element.</p>
 <pre class="r"><code># I named my vector after Portrait of the Artist of a Young Man because I like it more than Ulysses
 potaaym &lt;- c(&quot;Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed.&quot;)
 potaaym &lt;- gsub(&quot;[[:punct:]]&quot;, &quot;&quot;, potaaym) %&gt;% str_split(, pattern = &quot; &quot;) %&gt;% unlist() # %&gt;% is pipe operator, just passes on the data into the next argument
@@ -1622,11 +1690,11 @@ potaaym &lt;- potaaym[seq(from = 1, to = length(potaaym), by = 3)]; potaaym</cod
 <pre><code>## [1] &quot;Stately&quot;  &quot;Mulligan&quot; &quot;the&quot;      &quot;a&quot;        &quot;lather&quot;   &quot;a&quot;        &quot;a&quot;       
 ## [8] &quot;crossed&quot;</code></pre>
 </div>
-<div id="challenge-2" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Challenge 2</h2>
+<div id="challenge-2" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Challenge 2</h2>
 <p>For challenge 2 we do some simple matrix subsetting, fairly
 self-explainable.</p>
-<pre class="r"><code>m &lt;- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE);m</code></pre>
+<pre class="r"><code>m &lt;- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE);m # we create an (8, 10) matrix of 1:80, it is input by column as opposed to row</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
 ## [1,]    1    9   17   25   33   41   49   57   65    73
 ## [2,]    2   10   18   26   34   42   50   58   66    74
@@ -1636,7 +1704,7 @@ self-explainable.</p>
 ## [6,]    6   14   22   30   38   46   54   62   70    78
 ## [7,]    7   15   23   31   39   47   55   63   71    79
 ## [8,]    8   16   24   32   40   48   56   64   72    80</code></pre>
-<pre class="r"><code># subset 2nd, 3rd,  6th columns
+<pre class="r"><code># subset 2nd, 3rd,  6th columns 
 x &lt;- m[, c(2, 3, 6)]; x</code></pre>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    9   17   41
@@ -1648,13 +1716,13 @@ x &lt;- m[, c(2, 3, 6)]; x</code></pre>
 ## [7,]   15   23   47
 ## [8,]   16   24   48</code></pre>
 <pre class="r"><code># rows
-x &lt;- m[6:8, ]; x</code></pre>
+x &lt;- m[6:8, ]; x # we subset the 6th, 7th, and 8th rows of m</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
 ## [1,]    6   14   22   30   38   46   54   62   70    78
 ## [2,]    7   15   23   31   39   47   55   63   71    79
 ## [3,]    8   16   24   32   40   48   56   64   72    80</code></pre>
 <pre class="r"><code># both rows and columns
-x &lt;- m[2:6, 2:9]; x</code></pre>
+x &lt;- m[2:6, 2:9]; x # subset elements that are in rows 2-6 AND columns 2-9</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 ## [1,]   10   18   26   34   42   50   58   66
 ## [2,]   11   19   27   35   43   51   59   67
@@ -1662,8 +1730,8 @@ x &lt;- m[2:6, 2:9]; x</code></pre>
 ## [4,]   13   21   29   37   45   53   61   69
 ## [5,]   14   22   30   38   46   54   62   70</code></pre>
 </div>
-<div id="challenge-3" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Challenge 3</h2>
+<div id="challenge-3" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Challenge 3</h2>
 <p>For challenge 3 we do some, slightly more complex, array subsetting.
 Here there are 16 5x5 matrices, indexed by (1:4, 1:4).</p>
 <pre class="r"><code>a &lt;- array(data = order(1:400, decreasing = T), dim = c(5, 5, 4, 4))
@@ -1685,8 +1753,8 @@ a[1:5, 1:5, 3, 3]</code></pre>
 ## [5,]  146  141  136  131  126</code></pre>
 <pre class="r"><code># this returns the entire matrix for the (3, 3) index</code></pre>
 </div>
-<div id="challenge-4" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Challenge 4</h2>
+<div id="challenge-4" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Challenge 4</h2>
 <p>For challenge 4, we create numerous nested lists comprised of
 character vectors to model taxonomy of <em>Primates</em>.</p>
 <pre class="r"><code># making vectors of each Hap group
@@ -1729,8 +1797,8 @@ Primates &lt;- list(Haplorhini, Strepsirhini)
 ## $Strepsrihini$Lorisoidea
 ## [1] &quot;Lorisidae&quot; &quot;Galagidae&quot;</code></pre>
 </div>
-<div id="challenge-5" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Challenge 5</h2>
+<div id="challenge-5" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Challenge 5</h2>
 <p>For challenge 5 we filter out a data frame and change the data type
 for each column. Column 2 gets switched to logical variables, and column
 3 gets switched to factor variables.</p>
